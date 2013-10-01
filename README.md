@@ -1,7 +1,8 @@
 headless-firefox Cookbook
 =========================
 
-Install and prepare firefox (or iceweasel) for cucumber testing.
+Install and prepare firefox (or iceweasel) for cucumber testing in a headless
+environment.
 
 Inspiration from [this blog
 post](http://blog.aentos.com/post/4368402854/easy-setup-for-your-cucumber-scenarios-using-the).
@@ -15,30 +16,23 @@ distros.
 Usage
 -----
 
-Simply add ```recipe[headless-firefox]``` to your run list.  In your Cucumber
-settings env setup you'll need to add:
-
-    Before('@selenium') do
-      if ENV["SELENIUM_HEADLESS"] == 'true'
-        require "headless"
-        @headless = Headless.new
-        @headless.start
-      end
-    end
+To get cucumber working in the selenium driver using a headless X server, xvfb:
  
-    After('@selenium') do
-      @headless.destroy if @headless.present?
-    end
+1. Add ```recipe[headless-firefox]``` to your run list.  
 
-Contributing
-------------
+2. Add
+   
+        gem 'headless'
 
-1. Fork the repository on Github
-2. Create a named feature branch (like `add_component_x`)
-3. Write you change
-4. Write tests for your change (if applicable)
-5. Run the tests, ensuring they all pass
-6. Submit a Pull Request using Github
+   to your ```Gemfile``` under ```group :test```.
+
+3. In your Cucumber settings env setup (e.g.
+   ```features/support/env_custom.rb```) add:
+
+        if ENV["SELENIUM_HEADLESS"] == 'true'
+          require "headless"
+          @headless = Headless.new.start
+        end
 
 License and Authors
 -------------------

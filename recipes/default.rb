@@ -23,9 +23,10 @@ package 'xvfb' do
   action :upgrade
 end
 
-gem_package 'headless' do
-  action :upgrade
-end
+# this works better/more consistantly if it is included in the bundle
+# gem_package 'headless' do
+#   action :upgrade
+# end
 
 magic_shell_environment 'SELENIUM_HEADLESS' do
     value 'true'
